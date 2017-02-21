@@ -6,20 +6,26 @@
     
 
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/ui-bootstrap-csp.css">
   </head>
   <body>
     <!-- sample angular code -->
     <div class="container">
-      <div ng-controller="InputController as input">
-        <p>{{ greeting }}</p>
+      <div class="center-block">
+        <form ng-controller="InputController as input">
+          <div class="form-group">
+            <label for="userName">Please Enter User Name</label>
+            <input type="text" class="form-control" ng-model="user.userName" placeholder="i.e., Octacat" title="userName">
+          </div>
+         <button type="submit" class="btn btn-primary" ng-click="input.getRepos(user)">Submit</button>
+        </form>
       </div>
     </div>
     
     
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.js"></script>
     <script src="vendor/ui-bootstrap-tpls-2.5.0.js"></script>
-     <script src="vendor/angular-logger.js"></script>
 
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/app.js"></script>

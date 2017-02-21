@@ -10,6 +10,7 @@
 angular
     .module('app')
     .factory('dataservice', dataservice)
+    .factory('storage', storage)
     .controller('InputController', InputController);
 
 
@@ -17,49 +18,54 @@ angular
 
 InputController.$inject = ['dataservice'];
 dataservice.$inject = ['$http'];
+storage.$inject = ['dataservice']
 
-function InputController(dataservice, logger) {
+
+function storage (dataservice){
   var vm = this;
-  vm.repos = [];
+  vm.model = [];
+}
 
-  activate();
+function InputController(dataservice) {
 
 
-  function activate() {
-      return getRepos().then(function(){
-        console.log('activated view')
-      }); 
-  }
-
-function getRepos() {
-
-    return dataservice.getRepos()
+function getRepos(user) {
+    console.log('sanity check', user.userName);
+    let userName = user.userName
+    return dataservice.getRepos(userName)
       .then(function(data){
           vm.repos = data;
+          storage.model = data;
           return vm.repos;
         });
     }
+
+  var vm = this;
+  vm.repos = [];
+  vm.getRepos = getRepos;
 
 }
 
 
 
-function dataservice($http, logger){
+
+function dataservice($http){
 
   return {
     getRepos: getRepos
   };
 
 
-  function getRepos(){
+  function getRepos(userName){
 
-  return $http.get('https://api.github.com/users/dbschwartz/repos')
+  return $http.get('https://api.github.com/users/'+userName+'/repos')
     .then(getReposComplete)
     .catch(getReposFailed);
 
 
     function getReposComplete(response){
         console.log(response);
+        return response;
     }
 
     function getReposFailed(error) {
