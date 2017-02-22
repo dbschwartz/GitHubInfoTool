@@ -20,9 +20,21 @@
           </div>
          <button type="submit" class="btn btn-primary" ng-click="input.getRepos(user)">Submit</button>
         </form>
-            
+       
       </div>
-    </div>
+        <div ng-controller="InputController as input">
+            <uib-accordion close-others="oneAtATime">
+                  <div uib-accordion-group class="panel-default" heading="{{key}}" ng-repeat="(key,value) in input.repos">
+                    {{value}}
+                  </div>
+            </uib-accordion>
+          </div>
+
+         
+     </div>
+   
+
+  
     
     
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.js"></script>

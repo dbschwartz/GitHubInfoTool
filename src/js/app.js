@@ -17,9 +17,10 @@ angular
 
 
 
-InputController.$inject = ['dataservice','$http'];
+InputController.$inject = ['dataservice','storage','$http','accordionService'];
 dataservice.$inject = ['$http', '$q','storage'];
 storage.$inject = [];
+accordionService.$inject = ['storage'];
 
 
 function storage (){
@@ -34,7 +35,7 @@ function storage (){
 
 }
 
-function InputController(dataservice, $http) {
+function InputController(dataservice,storage,$http,accordionService) {
 
 
 
@@ -44,56 +45,41 @@ function InputController(dataservice, $http) {
         var userName = user.userName
         return dataservice.getRepos(userName)
           .then(function(data){
-            accordionService
+            vm.repos = data;
         })
 }
       var vm = this;
-      vm.repos = [];
       vm.getRepos = getRepos;
  }
 
 
 
-function accordionService(){
-
-  var vm = this;
-
-  let dataTrimmed = storage.model.data;
-
-
-  data.forEach(function(instanceObj){
-    var obj = {};
+function accordionService(storage){
+   return {
+            redrawAccordion: redrawAccordion
+        };
 
 
+        var vm = this;
+        var data = vm.data;
+        var oneAtATime = vm.oneAtATime;
+        var status = vm.status;
 
-  })
+      function redrawAccordion(){
 
-  vm.oneAtATime = true;
-
-
+        data = storage.trimmedData;
+        oneAtATime = true;
 
 
 
-
-  vm.groups = [
-    {
-      title: 'Dynamic Group Header - 1',
-      content: 'Dynamic Group Body - 1'
-    },
-    {
-      title: 'Dynamic Group Header - 2',
-      content: 'Dynamic Group Body - 2'
-    }
-  ];
-
-  vm.items = ['Item 1', 'Item 2', 'Item 3'];
-
-
-  vm.status = {
-    isCustomHeaderOpen: false,
-    isFirstOpen: true,
-    isFirstDisabled: false
-  };
+        status = {
+          isCustomHeaderOpen: false,
+          isFirstOpen: true,
+          isFirstDisabled: false
+        };
+      }
+       
+     
 }
 
 
